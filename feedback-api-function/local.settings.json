@@ -1,0 +1,10 @@
+{
+  "IsEncrypted": false,
+  "Values": {
+    "AzureWebJobsStorage": "UseDevelopmentStorage=true",
+    "FUNCTIONS_WORKER_RUNTIME": "java",
+    "DB_URL": " jdbc:sqlserver://fiap-db-server.database.windows.net:1433;databaseName=fiap-db-server;encrypt=false;trustServerCertificate=true;hostNameInCertificate=*.database.windows.net;loginTimeout=30;",
+    "DB_USER": "azureDBFiapProject",
+    "DB_PASSWORD": "@Microsoft.KeyVault(SecretUri=https://secretkeyvaults.vault.azure.net/secrets/DB-PASSWORD/suaversao)"
+  }
+}
