@@ -1,9 +1,6 @@
 package br.com.fiap.feedback;
 
-import com.microsoft.azure.functions.ExecutionContext;
-import com.microsoft.azure.functions.HttpMethod;
-import com.microsoft.azure.functions.HttpRequestMessage;
-import com.microsoft.azure.functions.HttpResponseMessage;
+import com.microsoft.azure.functions.*;
 import com.microsoft.azure.functions.annotation.AuthorizationLevel;
 import com.microsoft.azure.functions.annotation.FunctionName;
 import com.microsoft.azure.functions.annotation.HttpTrigger;
@@ -15,7 +12,7 @@ import java.util.Optional;
  * Ponto de entrada da Azure Function.
  * Estende AzureSpringBootRequestHandler para integrar com o contexto do Spring Boot.
  */
-public class FeedbackAzureFunction extends AzureSpringBootRequestHandler<Object, Object> {
+public class FeedbackAzureFunction {
 
     @FunctionName("feedbackApi")
     public HttpResponseMessage execute(
@@ -30,6 +27,8 @@ public class FeedbackAzureFunction extends AzureSpringBootRequestHandler<Object,
         context.getLogger().info("Processando requisição via proxyFunction: " + request.getUri().getPath());
 
         // O AzureSpringBootRequestHandler usará a 'proxyFunction' definida no Spring Context.
-        return handleRequest(request, context);
+        return request.createResponseBuilder(HttpStatus.CREATED)
+                .body("Avaliação registrada com sucesso")
+                .build();
     }
 }
