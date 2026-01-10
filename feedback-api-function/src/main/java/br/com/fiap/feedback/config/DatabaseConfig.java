@@ -24,7 +24,17 @@ public final class DatabaseConfig {
     }
 
     public Connection openConnection() throws SQLException {
+        ensureSqlServerDriverLoaded();
         return DriverManager.getConnection(url, user, password);
+    }
+
+    private static void ensureSqlServerDriverLoaded() {
+        try {
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+        } catch (ClassNotFoundException e) {
+            throw new IllegalStateException(
+                    "Driver JDBC do SQL Server não encontrado no classpath (mssql-jdbc).", e);
+        }
     }
 
     private static String getRequiredEnv(String name) {
