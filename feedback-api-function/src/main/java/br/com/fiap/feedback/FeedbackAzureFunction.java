@@ -1,9 +1,7 @@
 package br.com.fiap.feedback;
 
-import br.com.fiap.feedback.config.DatabaseConfig;
 import br.com.fiap.feedback.dto.AvaliacaoRequestDTO;
-import br.com.fiap.feedback.repository.AvaliacaoRepositoryJdbc;
-import br.com.fiap.feedback.service.AvaliacaoService;
+import br.com.fiap.feedback.infrastructure.AppContext;
 import br.com.fiap.feedback.util.JsonUtil;
 import br.com.fiap.feedback.util.Strings;
 import com.microsoft.azure.functions.*;
@@ -55,10 +53,7 @@ public class FeedbackAzureFunction {
         try {
             AvaliacaoRequestDTO dto = JsonUtil.read(bodyOpt.get(), AvaliacaoRequestDTO.class);
 
-            AvaliacaoService service = new AvaliacaoService(
-                    new AvaliacaoRepositoryJdbc(DatabaseConfig.fromEnv()));
-
-            Long id = service.criar(dto);
+            Long id = AppContext.avaliacaoService().criar(dto);
             Map<String, Object> response = new HashMap<>();
             response.put("message", "Avaliação salva com sucesso");
             if (id != null) {

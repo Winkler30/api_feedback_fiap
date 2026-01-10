@@ -1,7 +1,8 @@
 package br.com.fiap.feedback.repository;
 
-import br.com.fiap.feedback.config.DatabaseConfig;
 import br.com.fiap.feedback.dto.AvaliacaoRequestDTO;
+
+import javax.sql.DataSource;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -10,17 +11,17 @@ import java.sql.Statement;
 
 public final class AvaliacaoRepositoryJdbc {
 
-    private final DatabaseConfig databaseConfig;
+    private final DataSource dataSource;
 
-    public AvaliacaoRepositoryJdbc(DatabaseConfig databaseConfig) {
-        this.databaseConfig = databaseConfig;
+    public AvaliacaoRepositoryJdbc(DataSource dataSource) {
+        this.dataSource = dataSource;
     }
 
     public Long insert(AvaliacaoRequestDTO dto) throws SQLException {
         String sql = "INSERT INTO AVALIACAO_AULA (COD_ID_AULA, NOTA_AVALIACAO, TEXTO_AVALIACAO, COD_ID_ALUNO, TIMESTAMP_AVALIACAO) "
                 + "VALUES (?, ?, ?, ?, SYSDATETIME())";
 
-        try (var connection = databaseConfig.openConnection();
+        try (var connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
             statement.setString(1, dto.getCodAula());

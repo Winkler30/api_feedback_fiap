@@ -34,6 +34,11 @@
             <artifactId>mssql-jdbc</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>com.zaxxer</groupId>
+            <artifactId>HikariCP</artifactId>
+        </dependency>
+
         <!-- Dependências do Azure Functions -->
         <dependency>
             <groupId>com.microsoft.azure.functions</groupId>
