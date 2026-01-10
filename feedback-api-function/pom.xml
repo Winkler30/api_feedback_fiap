@@ -25,19 +25,10 @@
         <java.version>17</java.version>
         <azure.functions.maven.plugin.version>1.34.0</azure.functions.maven.plugin.version>
         <azure.functions.java.library.version>3.1.0</azure.functions.java.library.version>
-        <spring-cloud-function.version>4.1.3</spring-cloud-function.version> <!-- Compatível com Spring Boot 3.3.x -->
     </properties>
 
     <dependencies>
-        <!-- Dependências do Spring Boot (herdadas do parent) -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-jpa</artifactId>
-        </dependency>
+        <!-- Azure Functions não-Spring (HTTP Trigger + JDBC) -->
         <dependency>
             <groupId>com.microsoft.sqlserver</groupId>
             <artifactId>mssql-jdbc</artifactId>
@@ -51,25 +42,11 @@
             <version>${azure.functions.java.library.version}</version>
         </dependency>
 
-        <!-- Dependências do Spring Cloud Function para Azure -->
         <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-function-adapter-azure</artifactId>
-            <version>${spring-cloud-function.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-function-web</artifactId>
-            <version>${spring-cloud-function.version}</version>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
         </dependency>
 
-
-        <!-- Dependências de Teste -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-        </dependency>
     </dependencies>
 
     <build>
@@ -98,7 +75,7 @@
                     <appSettings>
                         <FUNCTIONS_EXTENSION_VERSION>~4</FUNCTIONS_EXTENSION_VERSION>
                         <FUNCTIONS_WORKER_RUNTIME>java</FUNCTIONS_WORKER_RUNTIME>
-                        <MAIN_CLASS>br.com.fiap.feedback.FeedbackApplicationConfig</MAIN_CLASS>
+                        <MAIN_CLASS>br.com.fiap.feedback.FeedbackAzureFunction</MAIN_CLASS>
                     </appSettings>
                 </configuration>
                 <executions>
