@@ -14,12 +14,11 @@ import java.util.Optional;
 public class FeedbackAzureFunction {
 
     @FunctionName("feedbackApi")
-    public HttpResponseMessage execute(
+    public HttpResponseMessage run(
             @HttpTrigger(
                 name = "req",
                 methods = {HttpMethod.GET, HttpMethod.POST, HttpMethod.PUT, HttpMethod.DELETE},
-                authLevel = AuthorizationLevel.ANONYMOUS,
-                route = "{*route}") 
+                authLevel = AuthorizationLevel.FUNCTION)
             HttpRequestMessage<Optional<String>> request,
             ExecutionContext context) {
 
