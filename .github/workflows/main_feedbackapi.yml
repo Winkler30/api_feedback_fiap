@@ -11,8 +11,8 @@ on:
 
 env:
   AZURE_FUNCTIONAPP_NAME: feedbackApi # set this to your function app name on Azure
-  PACKAGE_DIRECTORY: 'feedback-api-function' # set this to the directory which contains pom.xml file
-  JAVA_VERSION: '17' # set this to the java version to use
+  PACKAGE_DIRECTORY: "feedback-api-function" # set this to the directory which contains pom.xml file
+  JAVA_VERSION: "17" # set this to the java version to use
 
 jobs:
   build-and-deploy:
@@ -22,20 +22,20 @@ jobs:
       contents: read #This is required for actions/checkout
 
     steps:
-      - name: 'Checkout GitHub Action'
+      - name: "Checkout GitHub Action"
         uses: actions/checkout@v4
 
       - name: Setup Java Sdk ${{ env.JAVA_VERSION }}
         uses: actions/setup-java@v4
         with:
           java-version: ${{ env.JAVA_VERSION }}
-          distribution: 'microsoft'
+          distribution: "microsoft"
 
-      - name: 'Restore Project Dependencies Using Mvn'
+      - name: "Restore Project Dependencies Using Mvn"
         shell: pwsh
         run: |
           mvn -pl feedback-api-function -am clean package -DskipTests
-      
+
       - name: Login to Azure
         uses: azure/login@v2
         with:
@@ -43,12 +43,11 @@ jobs:
           tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_63C22BA1DD474BC0A001092056B8B6FD }}
           subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_F01C2192068F4CBD9C32B023A1F46A12 }}
 
-      - name: 'Run Azure Functions Action'
+      - name: "Run Azure Functions Action"
         uses: Azure/functions-action@v1
         id: fa
         with:
-          app-name: 'feedbackApi'
-          slot-name: 'Production'
-          package: 'feedback-api-function/target/azure-functions/feedback-api-function'
+          app-name: "feedbackApi"
+          slot-name: "Production"
+          package: "feedback-api-function/target/azure-functions/feedback-api-function"
           respect-pom-xml: false
-          
